@@ -1,0 +1,11 @@
+# Intentionally minimal — do NOT add RewriteEngine/RewriteRule here.
+#
+# The PROJECT-ROOT .htaccess routes every /admin* request through the Laravel
+# front controller (../index.php), so this application folder is never served
+# directly (that protects .env, vendor, etc. and avoids the /admin -> public
+# redirect that caused the stuck loading spinner).
+#
+# Adding rewrite rules in this file would OVERRIDE the parent rules and break
+# that, so it is deliberately left without any.
+
+Options -Indexes

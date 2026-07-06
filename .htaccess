@@ -1,0 +1,28 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # The Laravel app lives in admin/, but its admin-panel ROUTES are /admin/*.
+    # Force every /admin* request through the Laravel front controller so the
+    # physical admin/ folder is NEVER served directly. This prevents the
+    # /admin -> /admin/public redirect (the stuck spinner) AND protects the
+    # application source (.env, vendor, etc.) from direct download.
+    # Must come BEFORE the "serve real files/dirs" rule below.
+    RewriteRule ^admin($|/) index.php [L]
+
+    # Serve real files and directories directly (assets/, storage/, any
+    # not-yet-converted .html pages). Everything else goes to Laravel.
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Send all other requests to the Laravel front controller.
+    RewriteRule ^ index.php [L]
+</IfModule>

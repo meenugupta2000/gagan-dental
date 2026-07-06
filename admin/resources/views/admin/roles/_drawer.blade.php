@@ -1,0 +1,4 @@
+<form method="POST" action="{{ $action }}" data-drawer-form>
+    @isset($method) @method($method) @endisset
+    @include('admin.roles._form', ['submitLabel' => $submitLabel])
+</form>

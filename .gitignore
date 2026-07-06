@@ -1,0 +1,48 @@
+# --- Environment & secrets ---
+admin/.env
+admin/.env.backup
+admin/.env.production
+admin/auth.json
+
+# --- Dependencies & build artifacts ---
+admin/vendor/
+admin/node_modules/
+admin/public/build/
+admin/public/hot
+
+# --- Laravel runtime storage (keep the folder structure, ignore the contents) ---
+admin/storage/*.key
+admin/storage/framework/cache/*
+admin/storage/framework/sessions/*
+admin/storage/framework/views/*
+admin/storage/logs/*
+
+# --- Symlinks recreated per-environment (see _fix_links.php / storage:link) ---
+/storage
+admin/public/storage
+
+# --- User-uploaded media (regenerated content; don't commit binaries) ---
+# Comment the next line out if you DO want to version the seeded brand assets.
+admin/storage/app/public/*
+
+# --- Local working / scratch assets (source art, stock photos, PDFs, notes) ---
+# Not part of the app — regenerated/exported into admin/storage as needed.
+/_Notes/
+
+# --- Local Claude Code tooling (machine-specific paths) ---
+# launch.json hardcodes this machine's PHP path; un-ignore if you want to share it.
+/.claude/
+
+# --- Editor / OS cruft ---
+.idea/
+.vscode/
+.fleet/
+*.log
+.DS_Store
+Thumbs.db
+.phpunit.result.cache
+
+# --- Stray backups / temp files ---
+*.bak
+*.tmp
+*~
