@@ -103,6 +103,7 @@ class TreatmentCategoryController extends Controller
     {
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'group' => ['required', 'in:' . implode(',', array_keys(TreatmentCategory::GROUPS))],
             'description' => ['nullable', 'string', 'max:5000'],
             'sort_order' => ['nullable', 'integer', 'min:0', 'max:9999'],
             'image' => ['nullable', 'file', 'mimes:png,jpg,jpeg,webp', 'max:4096'],

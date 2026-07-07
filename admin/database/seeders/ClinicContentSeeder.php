@@ -29,6 +29,7 @@ class ClinicContentSeeder extends Seeder
     {
         $catalog = [
             'General Dentistry' => [
+                'group' => 'dental',
                 'description' => 'Everyday dental care for the whole family — check-ups, cleanings, fillings and more.',
                 'treatments' => [
                     ['name' => 'Dental Check-up & Cleaning', 'duration' => '30–45 mins', 'actual_price' => 999, 'show_on_home' => true],
@@ -38,6 +39,7 @@ class ClinicContentSeeder extends Seeder
                 ],
             ],
             'Cosmetic Dentistry' => [
+                'group' => 'dental',
                 'description' => 'Smile-enhancing treatments that brighten, straighten and perfect your teeth.',
                 'treatments' => [
                     ['name' => 'Teeth Whitening', 'duration' => '60 mins', 'actual_price' => 8000, 'deal_price' => 5999, 'badge' => 'Popular', 'show_on_home' => true],
@@ -46,6 +48,7 @@ class ClinicContentSeeder extends Seeder
                 ],
             ],
             'Orthodontics' => [
+                'group' => 'dental',
                 'description' => 'Braces and clear aligners to straighten teeth for children and adults.',
                 'treatments' => [
                     ['name' => 'Metal & Ceramic Braces', 'duration' => '12–24 months', 'actual_price' => 35000],
@@ -53,6 +56,7 @@ class ClinicContentSeeder extends Seeder
                 ],
             ],
             'Implants & Prosthetics' => [
+                'group' => 'dental',
                 'description' => 'Permanent, natural-looking replacements for missing teeth.',
                 'treatments' => [
                     ['name' => 'Dental Implants', 'duration' => '2–3 visits', 'actual_price' => 30000, 'badge' => 'Advanced', 'show_on_home' => true],
@@ -61,6 +65,7 @@ class ClinicContentSeeder extends Seeder
                 ],
             ],
             'Facial Aesthetics' => [
+                'group' => 'skin',
                 'description' => 'Non-surgical aesthetic treatments for naturally youthful, refreshed skin.',
                 'treatments' => [
                     ['name' => 'Botox & Dermal Fillers', 'duration' => '30–45 mins'],
@@ -76,6 +81,7 @@ class ClinicContentSeeder extends Seeder
                 ['slug' => Str::slug($categoryName)],
                 [
                     'name' => $categoryName,
+                    'group' => $data['group'] ?? 'dental',
                     'description' => $data['description'],
                     'sort_order' => $categorySort++,
                     'is_active' => true,

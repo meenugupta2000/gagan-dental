@@ -92,10 +92,16 @@ class TreatmentController extends Controller
             ->with('success', 'Treatment deleted successfully.');
     }
 
-    /** Public "Treatments" listing page (optionally filtered by ?category=). */
+    /** Public "Treatments" listing page (optionally filtered by ?group= and/or ?category=). */
     public function page(Request $request)
     {
+        $activeGroup = $request->string('group')->toString() ?: null;
+        if ($activeGroup && ! array_key_exists($activeGroup, TreatmentCategory::GROUPS)) {
+            $activeGroup = null;
+        }
+
         $categories = TreatmentCategory::where('is_active', true)
+            ->when($activeGroup, fn ($q) => $q->where('group', $activeGroup))
             ->orderBy('sort_order')->orderBy('name')
             ->get();
 
@@ -105,11 +111,12 @@ class TreatmentController extends Controller
             ->where('is_active', true)
             ->with(['category', 'images'])
             ->when($activeCategory, fn ($q) => $q->whereHas('category', fn ($c) => $c->where('slug', $activeCategory)))
+            ->when($activeGroup, fn ($q) => $q->whereHas('category', fn ($c) => $c->where('group', $activeGroup)))
             ->orderBy('sort_order')->orderBy('name')
             ->paginate(12)
             ->withQueryString();
 
-        return view('treatments', compact('categories', 'treatments', 'activeCategory'));
+        return view('treatments', compact('categories', 'treatments', 'activeCategory', 'activeGroup'));
     }
 
     /** Public single-treatment detail page. */

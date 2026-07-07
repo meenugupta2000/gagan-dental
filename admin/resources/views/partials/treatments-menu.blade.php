@@ -1,15 +1,17 @@
                                  <li class="togo-dropdown p-static">
-                                    <a href="{{ route('treatments') }}">Treatments</a>
-                                    @if ($menuCategories->isNotEmpty())
+                                    <a href="{{ route('treatments', ['group' => $group->key]) }}">{{ $group->label }}</a>
+                                    @if ($group->categories->isNotEmpty())
                                     {{-- NOTE: the "togo-megamenu-destination*" class names below are theme
                                          CSS/JS hooks (assets/js/scripts.js switches the panels via
-                                         .togo-megamenu-nav li / .togo-megamenu-destination-wrap) — keep them. --}}
+                                         .togo-megamenu-nav li / .togo-megamenu-destination-wrap) — keep them.
+                                         The switching is scoped per .togo-megamenu, so multiple mega-menus
+                                         (Dental, Skin) never clash. --}}
                                     <div class="togo-megamenu mobile-slide">
                                        <div class="row">
                                           <div class="col-xl-3">
                                              <div class="togo-megamenu-nav">
                                                 <ul>
-                                                   @foreach ($menuCategories as $i => $m)
+                                                   @foreach ($group->categories as $i => $m)
                                                    <li class="{{ $i === 0 ? 'active' : '' }}">
                                                       <a href="#">{{ $m->category->name }}
                                                          <span>
@@ -22,15 +24,15 @@
                                                    @endforeach
                                                 </ul>
                                                 <div class="togo-megamenu-show d-none d-xl-block">
-                                                   <a class="togo-tour-btn line-border" href="{{ route('treatments') }}">
-                                                      <span>View all</span>
+                                                   <a class="togo-tour-btn line-border" href="{{ route('treatments', ['group' => $group->key]) }}">
+                                                      <span>View all {{ $group->label }}</span>
                                                    </a>
                                                 </div>
                                              </div>
                                           </div>
                                           <div class="col-xl-6">
                                              <div class="togo-megamenu-destination">
-                                                @foreach ($menuCategories as $i => $m)
+                                                @foreach ($group->categories as $i => $m)
                                                 <div class="togo-megamenu-destination-wrap {{ $i === 0 ? '' : 'd-none' }}">
                                                    <span class="togo-megamenu-destination-title">{{ $m->category->name }}</span>
                                                    <div class="row">

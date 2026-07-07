@@ -67,11 +67,13 @@ class AppServiceProvider extends ServiceProvider
         });
 
         // "Treatments" mega-menu: active categories, each with its active
-        // treatments, for the public site header.
+        // treatments, for the public site header — split into the "Dental" and
+        // "Skin" top-nav groups.
         View::composer('partials.header', function ($view) {
-            $menuCategories = collect();
+            $navGroups = collect();
 
-            if (\Illuminate\Support\Facades\Schema::hasTable('treatments')) {
+            if (\Illuminate\Support\Facades\Schema::hasTable('treatment_categories')
+                && \Illuminate\Support\Facades\Schema::hasColumn('treatment_categories', 'group')) {
                 $menuCategories = \App\Models\TreatmentCategory::where('is_active', true)
                     ->orderBy('sort_order')->orderBy('name')
                     ->with(['treatments' => fn ($q) => $q->where('is_active', true)
@@ -81,11 +83,23 @@ class AppServiceProvider extends ServiceProvider
                         'category' => $category,
                         'treatments' => $category->treatments,
                     ])
-                    ->filter(fn ($m) => $m->treatments->isNotEmpty())
+                    ->filter(fn ($m) => $m->treatments->isNotEmpty());
+
+                // One top-nav item per group (Dental, Skin); only groups that
+                // actually have categories with active treatments are shown.
+                $navGroups = collect(\App\Models\TreatmentCategory::GROUPS)
+                    ->map(fn ($label, $key) => (object) [
+                        'key' => $key,
+                        'label' => $label,
+                        'categories' => $menuCategories
+                            ->filter(fn ($m) => $m->category->group === $key)
+                            ->values(),
+                    ])
+                    ->filter(fn ($group) => $group->categories->isNotEmpty())
                     ->values();
             }
 
-            $view->with('menuCategories', $menuCategories);
+            $view->with('navGroups', $navGroups);
         });
     }
 

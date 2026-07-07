@@ -8,9 +8,18 @@ use Illuminate\Support\Facades\Storage;
 
 class TreatmentCategory extends Model
 {
+    /** Top-nav groups. Keys are stored in the `group` column; values are labels. */
+    public const GROUPS = [
+        'dental' => 'Dental',
+        'skin' => 'Skin',
+    ];
+
+    public const DEFAULT_GROUP = 'dental';
+
     protected $fillable = [
         'name',
         'slug',
+        'group',
         'description',
         'image_path',
         'sort_order',
@@ -41,5 +50,11 @@ class TreatmentCategory extends Model
     public function getImageUrlAttribute(): ?string
     {
         return $this->image_path ? Storage::disk('public')->url($this->image_path) : null;
+    }
+
+    /** Human label for the nav group (e.g. "Dental", "Skin"). */
+    public function getGroupLabelAttribute(): string
+    {
+        return self::GROUPS[$this->group] ?? ucfirst((string) $this->group);
     }
 }

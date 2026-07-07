@@ -44,15 +44,8 @@
 		});
 	}
 
-	const menuItems = document.querySelectorAll('.togo-megamenu-nav li');
-	const contents = document.querySelectorAll('.togo-megamenu-destination-wrap');
-
-	let activeIndex = 0;
-	menuItems.forEach((li, index) => {
-		if (li.classList.contains('active')) {
-			activeIndex = index;
-		}
-	});
+	// (Mega-menu panel switching is initialised further below — scoped per
+	// .togo-megamenu so multiple mega-menus never share a global index.)
 
 	$(document).ready(function ($) {
 		var currentPage = window.location.pathname.split("/").pop();
@@ -78,36 +71,33 @@
 	});
 
 
-	// Show only active content
-	contents.forEach((content, i) => {
-		if (i === activeIndex) {
-			content.classList.remove('d-none');
-			setTimeout(() => content.classList.add('show'), 10);
-		} else {
-			content.classList.add('d-none');
-			content.classList.remove('show');
-		}
-	});
+	// Mega-menu panel switching — scoped per .togo-megamenu so multiple
+	// mega-menus (e.g. Dental and Skin) each track their own active panel and
+	// never clash on a shared global index.
+	document.querySelectorAll('.togo-megamenu').forEach((mega) => {
+		const navLis = Array.prototype.slice.call(mega.querySelectorAll('.togo-megamenu-nav li'));
+		const wraps = Array.prototype.slice.call(mega.querySelectorAll('.togo-megamenu-destination-wrap'));
+		if (!navLis.length || !wraps.length) return;
 
-	// ------- Hover events -------
-	menuItems.forEach((item, index) => {
-		item.addEventListener('mouseover', () => {
-
-			// active class switch
-			menuItems.forEach(li => li.classList.remove('active'));
-			item.classList.add('active');
-
-			// content switch with animation
-			contents.forEach((content, cIndex) => {
-				if (cIndex === index) {
-					content.classList.remove('d-none');
-					setTimeout(() => content.classList.add('show'), 10);
-
+		const activate = (index) => {
+			navLis.forEach((li, i) => li.classList.toggle('active', i === index));
+			wraps.forEach((w, i) => {
+				if (i === index) {
+					w.classList.remove('d-none');
+					setTimeout(() => w.classList.add('show'), 10);
 				} else {
-					content.classList.add('d-none');
-					content.classList.remove('show');
+					w.classList.add('d-none');
+					w.classList.remove('show');
 				}
 			});
+		};
+
+		let start = navLis.findIndex((li) => li.classList.contains('active'));
+		if (start < 0) start = 0;
+		activate(start);
+
+		navLis.forEach((li, index) => {
+			li.addEventListener('mouseover', () => activate(index));
 		});
 	});
 

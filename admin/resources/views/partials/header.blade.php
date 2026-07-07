@@ -20,13 +20,12 @@
                            <nav class="togo-mobile-menu">
                               <ul>
                                  <li><a href="{{ route('home') }}">Home</a></li>
+                                 @foreach ($navGroups as $group)
+                                    @include('partials.treatments-menu', ['group' => $group])
+                                 @endforeach
                                  <li><a href="{{ route('about') }}">About</a></li>
                                  <li><a href="{{ route('achievements') }}">Achievements</a></li>
-                                 @include('partials.treatments-menu')
                                  <li><a href="{{ route('testimonials') }}">Testimonials</a></li>
-                                 <li><a href="{{ route('offers') }}">Offers</a></li>
-                                 <li><a href="{{ route('blog') }}">Blog</a></li>
-                                 <li><a href="{{ route('faqs') }}">FAQs</a></li>
                                  <li><a href="{{ route('contact') }}">Contact</a></li>
                               </ul>
                            </nav>

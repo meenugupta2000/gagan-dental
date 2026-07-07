@@ -90,9 +90,6 @@
                               <p>{{ $about->description }}</p>
                            </div>
                            @endif
-                           <div class="mt-30 fade-anim" data-delay=".8">
-                              <a class="togo-btn-primary bdr-style orange-bdr" href="{{ route('treatments') }}">Explore our treatments</a>
-                           </div>
                         </div>
                      </div>
                   </div>
@@ -121,16 +118,6 @@
             </style>
             <div class="togo-trand-ptb pt-60 pb-60">
                <div class="container container-1440">
-                  <div class="row">
-                     <div class="col-lg-12">
-                        <div class="togo-trand-heading text-center mb-40">
-                           <h4 class="togo-section-title ff-marcellus mb-1 fade-anim" data-delay=".3">Our Treatments</h4>
-                           <div class="togo-trand-text fade-anim" data-delay=".5">
-                              <p>Choose the care your smile needs</p>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
                   <div class="row">
                      @foreach ($categories as $cat)
                      <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-30">

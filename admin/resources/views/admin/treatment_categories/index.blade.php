@@ -22,6 +22,7 @@
                 <tr>
                     <th style="width:80px;">Image</th>
                     <th>Name</th>
+                    <th style="width:90px;">Group</th>
                     <th>Slug</th>
                     <th>Description</th>
                     <th style="width:70px;">Order</th>
@@ -40,6 +41,9 @@
                             @endif
                         </td>
                         <td><span class="fw-semibold">{{ $category->name }}</span></td>
+                        <td>
+                            <span class="pill {{ $category->group === 'skin' ? 'pill-warn' : 'pill-brand' }}">{{ $category->group_label }}</span>
+                        </td>
                         <td><code class="small">{{ $category->slug }}</code></td>
                         <td><span class="text-muted small">{{ \Illuminate\Support\Str::limit($category->description, 80) ?: '—' }}</span></td>
                         <td><span class="pill pill-neutral">{{ $category->sort_order }}</span></td>
@@ -66,7 +70,7 @@
                         </td>
                     </tr>
                 @empty
-                    <tr><td colspan="7"><div class="empty-state"><i class="bi bi-collection"></i><p class="mb-0 mt-2">No categories yet.</p></div></td></tr>
+                    <tr><td colspan="8"><div class="empty-state"><i class="bi bi-collection"></i><p class="mb-0 mt-2">No categories yet.</p></div></td></tr>
                 @endforelse
             </tbody>
         </table>

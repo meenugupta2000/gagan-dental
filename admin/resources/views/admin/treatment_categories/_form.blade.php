@@ -9,6 +9,16 @@
     </div>
 
     <div class="col-12">
+        <label class="form-label">Group <span class="req">*</span></label>
+        <select name="group" class="form-select" required>
+            @foreach (\App\Models\TreatmentCategory::GROUPS as $value => $label)
+                <option value="{{ $value }}" {{ old('group', $category->group ?? \App\Models\TreatmentCategory::DEFAULT_GROUP) === $value ? 'selected' : '' }}>{{ $label }}</option>
+            @endforeach
+        </select>
+        <div class="form-text">Which top-navbar menu this category appears under — <strong>Dental</strong> or <strong>Skin</strong>.</div>
+    </div>
+
+    <div class="col-12">
         <label class="form-label">Description</label>
         <textarea name="description" rows="4" class="form-control" placeholder="A short description of this treatment category.">{{ old('description', $category->description ?? '') }}</textarea>
     </div>
