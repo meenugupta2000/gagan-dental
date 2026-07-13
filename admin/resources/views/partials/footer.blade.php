@@ -193,6 +193,21 @@
     }
     .gd-footer-legal-item { color: rgba(255, 255, 255, .6); font-size: .82rem; letter-spacing: .01em; }
     .gd-footer-legal-item .lbl { color: rgba(255, 255, 255, .85); font-weight: 700; text-transform: uppercase; font-size: .72rem; letter-spacing: .05em; }
+
+    /* --- Brand-green accents (Option A): tie the navy footer to the theme --- */
+    .togo-footer-ptb .togo-footer-main-wrapper.black-style .togo-footer-widget-title { color: #43a047; }
+    .togo-footer-ptb .togo-footer-2-top-border { border-top-color: rgba(67, 160, 71, .45); }
+    .togo-footer-ptb .gd-footer-legal { border-bottom-color: rgba(67, 160, 71, .3); }
+    .togo-footer-ptb .togo-footer-widget-input-btn {
+        top: 50%; right: 8px; transform: translateY(-50%);
+        width: 42px; height: 42px; border-radius: 50%;
+        background: linear-gradient(135deg, #2e7d32, #43a047);
+        display: grid; place-items: center;
+        box-shadow: 0 6px 14px rgba(46, 125, 50, .35);
+        transition: box-shadow .2s ease, transform .2s ease;
+    }
+    .togo-footer-ptb .togo-footer-widget-input-btn:hover { transform: translateY(-50%) scale(1.06); box-shadow: 0 8px 20px rgba(46, 125, 50, .5); }
+    .togo-footer-ptb .togo-footer-widget-input-btn span { color: #fff; margin: 0; }
 </style>
 <script>
     (function () {
