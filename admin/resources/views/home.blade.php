@@ -2,6 +2,25 @@
 
 @section('content')
             <!-- hero area start -->
+            @if ($hero->mobile_image_url)
+            <style>
+               /* Phones: use the dedicated portrait hero image instead of the
+                  cropped landscape/parallax one, and veil the BOTTOM so the
+                  lower-anchored heading stays readable over the photo. */
+               @media (max-width: 767px) {
+                  .togo-hero-5-bg {
+                     background-image: url('{{ $hero->mobile_image_url }}') !important;
+                     background-size: cover !important;
+                     background-position: center top !important;
+                     background-repeat: no-repeat !important;
+                  }
+                  .togo-hero-5-bg .gd-parallax-media { display: none !important; }
+                  .togo-hero-5-bg::after {
+                     background: linear-gradient(180deg, rgba(255, 255, 255, .06) 0%, rgba(255, 255, 255, .45) 55%, rgba(255, 255, 255, .88) 100%) !important;
+                  }
+               }
+            </style>
+            @endif
             <div class="togo-hero-5-ptb bg-pos togo-hero-5-bg gd-parallax p-relative fix pt-200 pb-10" data-background="{{ $hero->image_url ?? 'assets/img/hero/home-5/bg-hero.jpg' }}">
                <div class="container container-1440 h-100">
                   <div class="row h-100">
@@ -18,58 +37,6 @@
                                  <a class="togo-btn-primary" href="{{ route('appointment') }}">Book an Appointment</a>
                               </div>
                            </div>
-                           <div class="togo-hero-5-bottom-wrap z-index-1">
-                              <div class="row">
-                                 <div class="col-lg-4 col-md-6">
-                                    <div class="togo-hero-5-item mb-30">
-                                       <div class="togo-hero-5-item-icon">
-                                          <span>
-                                             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none">
-                                                <path d="M12 2L4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M8.5 12l2.4 2.4L15.5 9.6" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-                                             </svg>
-                                          </span>
-                                       </div>
-                                       <div class="togo-hero-5-item-content">
-                                          <h4 class="togo-hero-5-item-title">Trusted Care</h4>
-                                          <p>Experienced dental and aesthetics team <br> with gentle, patient-first treatment.</p>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="col-lg-4 col-md-6">
-                                    <div class="togo-hero-5-item mb-30">
-                                       <div class="togo-hero-5-item-icon">
-                                          <span>
-                                             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none">
-                                                <path d="M12 3l1.7 4.3L18 9l-4.3 1.7L12 15l-1.7-4.3L6 9l4.3-1.7L12 3Z" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M18.5 14.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9.9-2.1Z" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-                                             </svg>
-                                          </span>
-                                       </div>
-                                       <div class="togo-hero-5-item-content">
-                                          <h4 class="togo-hero-5-item-title">Modern Technology</h4>
-                                          <p>Advanced equipment and techniques <br> for precise, comfortable results.</p>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="col-lg-4 col-md-6">
-                                    <div class="togo-hero-5-item mb-30">
-                                       <div class="togo-hero-5-item-icon">
-                                          <span>
-                                             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none">
-                                                <path d="M8 2v4M16 2v4M3 9h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M9 15l2 2 4-4" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-                                             </svg>
-                                          </span>
-                                       </div>
-                                       <div class="togo-hero-5-item-content">
-                                          <h4 class="togo-hero-5-item-title">Easy Appointments</h4>
-                                          <p>Book online in under a minute and <br> we will confirm your visit promptly.</p>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
                         </div>
                      </div>
                   </div>
@@ -77,12 +44,86 @@
             </div>
             <!-- hero area end -->
 
+            <!-- trust strip (moved out of the hero) start -->
+            <style>
+               .gd-trust-strip { background: #ffffff; padding: 60px 0 44px; }
+               .gd-trust-card {
+                  display: flex; align-items: flex-start; gap: 18px; height: 100%;
+                  background: #f6f8fb; border: 1px solid #eceff5; border-radius: 16px; padding: 26px 24px;
+                  transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease;
+               }
+               .gd-trust-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(46, 125, 50, .13); }
+               .gd-trust-icon {
+                  flex-shrink: 0; width: 58px; height: 58px; border-radius: 50%;
+                  background: linear-gradient(135deg, #2e7d32, #43a047);
+                  display: grid; place-items: center; box-shadow: 0 8px 18px rgba(46, 125, 50, .28);
+               }
+               .gd-trust-icon svg { width: 28px; height: 28px; }
+               .gd-trust-card h3 { font-family: var(--togo-ff-marcellus); font-weight: 600; font-size: 1.18rem; color: #14233a; margin: 0 0 6px; line-height: 1.25; }
+               .gd-trust-card p { color: #5d6a82; font-size: .94rem; line-height: 1.6; margin: 0; }
+               @media (max-width: 767px) {
+                  .gd-trust-strip { padding: 34px 0 8px; }
+                  .gd-trust-card { padding: 20px 18px; gap: 14px; }
+                  .gd-trust-icon { width: 50px; height: 50px; }
+                  .gd-trust-icon svg { width: 24px; height: 24px; }
+               }
+            </style>
+            <div class="gd-trust-strip">
+               <div class="container container-1440">
+                  <div class="row g-4">
+                     <div class="col-lg-4 col-md-4">
+                        <div class="gd-trust-card fade-anim" data-delay=".3">
+                           <div class="gd-trust-icon">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                                 <path d="M12 2L4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                 <path d="M8.5 12l2.4 2.4L15.5 9.6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                           </div>
+                           <div>
+                              <h3>Trusted Care</h3>
+                              <p>Experienced dental and aesthetics team with gentle, patient-first treatment.</p>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-4 col-md-4">
+                        <div class="gd-trust-card fade-anim" data-delay=".5">
+                           <div class="gd-trust-icon">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                                 <path d="M12 3l1.7 4.3L18 9l-4.3 1.7L12 15l-1.7-4.3L6 9l4.3-1.7L12 3Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                 <path d="M18.5 14.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9.9-2.1Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                           </div>
+                           <div>
+                              <h3>Modern Technology</h3>
+                              <p>Advanced equipment and techniques for precise, comfortable results.</p>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-4 col-md-4">
+                        <div class="gd-trust-card fade-anim" data-delay=".7">
+                           <div class="gd-trust-icon">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                                 <path d="M8 2v4M16 2v4M3 9h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                 <path d="M9 15l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                           </div>
+                           <div>
+                              <h3>Easy Appointments</h3>
+                              <p>Book online in under a minute and we will confirm your visit promptly.</p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- trust strip end -->
+
             <!-- about area start -->
-             <div class="togo-about-5-ptb pt-100 pb-60">
+             <div class="togo-about-5-ptb pt-100 pb-20">
                <div class="container container-1440">
                   <div class="row">
                      <div class="col-lg-12">
-                        <div class="togo-about-5-heading text-center mb-40">
+                        <div class="togo-about-5-heading text-center mb-20">
                            @if ($about->subtitle)<span class="togo-section-subtitle fade-anim" data-delay=".3">{{ $about->subtitle }}</span>@endif
                            <h4 class="togo-section-title fs-36 ff-marcellus mb-20 fade-anim" data-delay=".5">{!! nl2br(e($about->title)) !!}</h4>
                            @if ($about->description)
@@ -115,20 +156,38 @@
                   color: #fff; font-family: var(--togo-ff-marcellus); font-weight: 600; font-size: 1.18rem; line-height: 1.25;
                   text-shadow: 0 2px 10px rgba(0,0,0,.55); letter-spacing: .2px;
                }
+               .gd-cat-group + .gd-cat-group { margin-top: 40px; }
+               .gd-cat-group-title {
+                  font-family: var(--togo-ff-marcellus); font-weight: 600; color: #14233a;
+                  font-size: 1.5rem; line-height: 1.2; margin: 0 0 26px; position: relative; padding-left: 16px;
+               }
+               .gd-cat-group-title::before {
+                  content: ''; position: absolute; left: 0; top: 3px; bottom: 3px; width: 4px;
+                  border-radius: 4px; background: #2e7d32;
+               }
             </style>
-            <div class="togo-trand-ptb pt-60 pb-60">
+            <div class="togo-trand-ptb pt-20 pb-60">
                <div class="container container-1440">
-                  <div class="row">
-                     @foreach ($categories as $cat)
-                     <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-30">
-                        <a href="{{ route('treatments', ['category' => $cat->slug]) }}" class="gd-cat-card">
-                           <img src="{{ $cat->image_url ?? asset('assets/img/placeholder-category.svg') }}" alt="{{ $cat->name }}">
-                           <span class="gd-cat-shade"></span>
-                           <span class="gd-cat-name">{{ $cat->name }}</span>
-                        </a>
+                  @php($catGroups = ['dental' => 'Dental Services', 'skin' => 'Skin Services'])
+                  @foreach ($catGroups as $groupKey => $groupLabel)
+                     @php($groupCats = $categories->where('group', $groupKey))
+                     @if ($groupCats->isNotEmpty())
+                     <div class="gd-cat-group">
+                        <h3 class="gd-cat-group-title fade-anim" data-delay=".3">{{ $groupLabel }}</h3>
+                        <div class="row">
+                           @foreach ($groupCats as $cat)
+                           <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-30">
+                              <a href="{{ route('treatments', ['category' => $cat->slug]) }}" class="gd-cat-card">
+                                 <img src="{{ $cat->image_url ?? asset('assets/img/placeholder-category.svg') }}" alt="{{ $cat->name }}">
+                                 <span class="gd-cat-shade"></span>
+                                 <span class="gd-cat-name">{{ $cat->name }}</span>
+                              </a>
+                           </div>
+                           @endforeach
+                        </div>
                      </div>
-                     @endforeach
-                  </div>
+                     @endif
+                  @endforeach
                </div>
             </div>
             @endif

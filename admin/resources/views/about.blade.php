@@ -39,7 +39,7 @@
     .ab-role { font-size: 1.06rem; font-weight: 700; color: #2e7d32; margin-bottom: 18px; }
     .ab-intro { color: #4a5568; font-size: 1.08rem; line-height: 1.8; margin: 0 0 22px; }
 
-    .ab-quals { list-style: none; padding: 0; margin: 0 0 26px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px 22px; }
+    .ab-quals { list-style: none; padding: 0; margin: 0 0 26px; display: grid; grid-template-columns: 1fr; gap: 10px 0; }
     .ab-quals li { position: relative; padding-left: 30px; color: #26313f; font-weight: 600; font-size: .98rem; }
     .ab-quals li svg { position: absolute; left: 0; top: 1px; width: 20px; height: 20px; color: #2e7d32; }
 

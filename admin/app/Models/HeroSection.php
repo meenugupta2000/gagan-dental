@@ -12,6 +12,9 @@ class HeroSection extends Model
     /** Recommended background image size, surfaced in the admin UI. */
     public const RECOMMENDED_RESOLUTION = '1920 × 1080 px';
 
+    /** Recommended portrait size for the phone-only hero image. */
+    public const RECOMMENDED_MOBILE_RESOLUTION = '1080 × 1350 px';
+
     /** Recommended inner-page banner size (wide, short). */
     public const RECOMMENDED_BANNER_RESOLUTION = '1920 × 600 px';
 
@@ -45,6 +48,14 @@ class HeroSection extends Model
     public function getImageUrlAttribute(): ?string
     {
         return $this->image_path ? Storage::disk('public')->url($this->image_path) : null;
+    }
+
+    /**
+     * Absolute URL to the phone-only portrait hero image, or null when none set.
+     */
+    public function getMobileImageUrlAttribute(): ?string
+    {
+        return $this->mobile_image_path ? Storage::disk('public')->url($this->mobile_image_path) : null;
     }
 
     /**

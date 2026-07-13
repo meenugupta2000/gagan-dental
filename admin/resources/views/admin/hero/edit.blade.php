@@ -54,8 +54,39 @@
                     </div>
                     <div class="form-text" data-hero-filename></div>
                     <div class="form-text">
-                        Shown only on the <strong>home page</strong> hero. Recommended:
+                        Shown on the <strong>home page</strong> hero (desktops/tablets). Recommended:
                         <strong>{{ \App\Models\HeroSection::RECOMMENDED_RESOLUTION }}</strong> (landscape). JPG, PNG or WEBP, max 4 MB.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Mobile hero image (phones only) --}}
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header"><span class="sec-icon"><i class="bi bi-phone"></i></span> Mobile Hero Image (Phones)</div>
+                <div class="card-body">
+                    <div class="row g-3 align-items-start">
+                        <div class="col-lg-4">
+                            <label class="form-label">Mobile Hero Image <span class="text-muted small">— portrait</span></label>
+                            <div class="hero-dropzone hero-dropzone--portrait {{ $hero->mobile_image_path ? 'has-image' : '' }}" data-hero-dropzone tabindex="0" role="button" aria-label="Upload mobile hero image">
+                                <input type="file" name="mobile_image" class="d-none" accept="image/png,image/jpeg,image/webp" data-hero-input>
+                                <img class="hero-dropzone-preview {{ $hero->mobile_image_path ? '' : 'd-none' }}" src="{{ $hero->mobile_image_url ?? '' }}" alt="Mobile hero image" data-hero-preview>
+                                <div class="hero-dropzone-prompt {{ $hero->mobile_image_path ? 'd-none' : '' }}" data-hero-prompt>
+                                    <i class="bi bi-phone"></i>
+                                    <div class="fw-semibold mt-1">Drag &amp; drop a portrait image</div>
+                                    <div class="small text-muted">or click to browse</div>
+                                </div>
+                                <div class="hero-dropzone-overlay"><span><i class="bi bi-arrow-repeat me-1"></i> Change image</span></div>
+                            </div>
+                            <div class="form-text" data-hero-filename></div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="text-muted small">
+                                <p class="mb-2">Shown only on <strong>phones</strong> for the home hero, so a wide landscape photo isn't cropped (face cut off) on tall, narrow screens.</p>
+                                <p class="mb-0">Use a <strong>portrait</strong> crop with the subject centred and a little empty space at the top for the text. Recommended: <strong>{{ \App\Models\HeroSection::RECOMMENDED_MOBILE_RESOLUTION }}</strong>. JPG, PNG or WEBP, max 4 MB. If left empty, the desktop image is used.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -121,6 +152,8 @@
     .hero-dropzone-preview { width: 100%; height: 200px; object-fit: cover; display: block; }
     .hero-dropzone--wide { min-height: 160px; }
     .hero-dropzone--wide .hero-dropzone-preview { height: 160px; }
+    .hero-dropzone--portrait { max-width: 260px; min-height: 320px; }
+    .hero-dropzone--portrait .hero-dropzone-preview { height: 320px; }
     .hero-dropzone-overlay {
         position: absolute; inset: 0;
         display: flex; align-items: center; justify-content: center;

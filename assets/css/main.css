@@ -7550,7 +7550,8 @@ body .ui-tooltip {
 }
 @media (max-width: 767px) {
   .togo-hero-5-bg {
-    height: inherit;
+    height: 85vh;
+    min-height: 520px;
   }
 }
 .togo-hero-5-bg::after {
@@ -7603,7 +7604,7 @@ body .ui-tooltip {
 .togo-hero-5-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 .togo-hero-5-heading p {
   font-size: 20px;

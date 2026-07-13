@@ -23,6 +23,7 @@ class HeroSectionController extends Controller
             'punchline' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string', 'max:1000'],
             'image' => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp', 'max:4096'],
+            'mobile_image' => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp', 'max:4096'],
             'inner_banner' => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp', 'max:4096'],
         ]);
 
@@ -33,6 +34,13 @@ class HeroSectionController extends Controller
             $data['image_path'] = $request->file('image')->store('hero', 'public');
         }
 
+        if ($request->hasFile('mobile_image')) {
+            if ($hero->mobile_image_path) {
+                Storage::disk('public')->delete($hero->mobile_image_path);
+            }
+            $data['mobile_image_path'] = $request->file('mobile_image')->store('hero', 'public');
+        }
+
         if ($request->hasFile('inner_banner')) {
             if ($hero->inner_banner_path) {
                 Storage::disk('public')->delete($hero->inner_banner_path);
@@ -40,7 +48,7 @@ class HeroSectionController extends Controller
             $data['inner_banner_path'] = $request->file('inner_banner')->store('hero', 'public');
         }
 
-        unset($data['image'], $data['inner_banner']);
+        unset($data['image'], $data['mobile_image'], $data['inner_banner']);
 
         $hero->update($data);
 
