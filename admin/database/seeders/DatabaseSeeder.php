@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             ClinicContentSeeder::class,
             AboutAndVideosSeeder::class,
             LegalPagesSeeder::class,
+            TeamSeeder::class,
         ]);
 
         // Super Admin account.

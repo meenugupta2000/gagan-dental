@@ -6,7 +6,9 @@ use App\Models\AboutSection;
 use App\Models\Blog;
 use App\Models\Feature;
 use App\Models\HeroSection;
+use App\Models\MediaItem;
 use App\Models\Offer;
+use App\Models\TeamMember;
 use App\Models\Testimonial;
 use App\Models\Treatment;
 use App\Models\TreatmentCategory;
@@ -40,6 +42,12 @@ class HomeController extends Controller
         // "Special Offers" → all active offers.
         $offers = Offer::where('is_active', true)->orderBy('sort_order')->orderBy('id')->get();
 
-        return view('home', compact('hero', 'about', 'features', 'testimonials', 'blogs', 'categories', 'treatments', 'offers'));
+        // "Our Team" → active team members in order.
+        $team = TeamMember::where('is_active', true)->orderBy('sort_order')->orderBy('id')->get();
+
+        // "Media Gallery" highlight → first 6 active media items.
+        $media = MediaItem::where('is_active', true)->orderBy('sort_order')->orderBy('id')->take(6)->get();
+
+        return view('home', compact('hero', 'about', 'features', 'testimonials', 'blogs', 'categories', 'treatments', 'offers', 'team', 'media'));
     }
 }

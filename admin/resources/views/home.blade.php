@@ -194,6 +194,59 @@
             <!-- treatment categories area end -->
 
 
+            <!-- our team area start -->
+            @if ($team->isNotEmpty())
+            <style>
+               .gd-team-card { background:#fff; border:1px solid #eceff5; border-radius:18px; overflow:hidden; box-shadow:0 8px 26px rgba(13,27,42,.07); transition:transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s ease; height:100%; }
+               .gd-team-card:hover { transform:translateY(-8px); box-shadow:0 22px 45px rgba(46,125,50,.14); }
+               .gd-team-photo { position:relative; aspect-ratio:4/5; background:linear-gradient(150deg,#183a20,#2e7d32); overflow:hidden; }
+               .gd-team-photo img { width:100%; height:100%; object-fit:cover; object-position:top center; transition:transform .6s cubic-bezier(.2,.8,.2,1); }
+               .gd-team-card:hover .gd-team-photo img { transform:scale(1.06); }
+               .gd-team-fallback { position:absolute; inset:0; display:grid; place-items:center; color:rgba(255,255,255,.9); }
+               .gd-team-fallback svg { width:66px; height:66px; opacity:.9; }
+               .gd-team-body { padding:20px 18px 24px; text-align:center; }
+               .gd-team-name { font-family:var(--togo-ff-marcellus); font-weight:600; font-size:1.2rem; color:#14233a; margin:0 0 5px; line-height:1.25; }
+               .gd-team-designation { color:#2e7d32; font-weight:600; font-size:.92rem; margin:0 0 6px; }
+               .gd-team-qual { color:#647089; font-size:.86rem; line-height:1.55; margin:0; }
+            </style>
+            <div class="togo-team-ptb pt-30 pb-40">
+               <div class="container container-1440">
+                  <div class="row">
+                     <div class="col-lg-12">
+                        <div class="togo-about-5-heading text-center mb-40">
+                           <span class="togo-section-subtitle fade-anim" data-delay=".3">Our Team</span>
+                           <h4 class="togo-section-title fs-36 ff-marcellus mb-0 fade-anim" data-delay=".5">Meet the Experts Behind Your Smile</h4>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row justify-content-center">
+                     @foreach ($team as $member)
+                     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-30">
+                        <div class="gd-team-card fade-anim" data-delay="{{ number_format(0.3 + ($loop->index % 4) * 0.15, 2) }}">
+                           <div class="gd-team-photo">
+                              @if ($member->photo_url)
+                                 <img src="{{ $member->photo_url }}" alt="{{ $member->name }}">
+                              @else
+                                 <div class="gd-team-fallback">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10ZM3.5 21a8.5 8.5 0 0 1 17 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                                 </div>
+                              @endif
+                           </div>
+                           <div class="gd-team-body">
+                              <h3 class="gd-team-name">{{ $member->name }}</h3>
+                              @if ($member->designation)<div class="gd-team-designation">{{ $member->designation }}</div>@endif
+                              @if ($member->qualification)<p class="gd-team-qual">{{ $member->qualification }}</p>@endif
+                           </div>
+                        </div>
+                     </div>
+                     @endforeach
+                  </div>
+               </div>
+            </div>
+            @endif
+            <!-- our team area end -->
+
+
             <!-- why choose us area start -->
             @if ($features->isNotEmpty())
             <style>
@@ -332,6 +385,55 @@
                </div>
              </div>
             <!-- appointment CTA banner end -->
+
+
+            <!-- media gallery highlight start -->
+            @if ($media->isNotEmpty())
+            <style>
+               .gd-media-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+               @media (max-width:991.98px){ .gd-media-grid { grid-template-columns:repeat(2,1fr); } }
+               @media (max-width:575.98px){ .gd-media-grid { grid-template-columns:1fr; } }
+               .gd-media-card { background:#fff; border:1px solid #e9edf3; border-radius:16px; overflow:hidden; box-shadow:0 8px 24px rgba(13,27,42,.06); transition:transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s ease; }
+               .gd-media-card:hover { transform:translateY(-6px); box-shadow:0 22px 45px rgba(46,125,50,.15); }
+               .gd-media-photo { position:relative; display:block; aspect-ratio:4/3; overflow:hidden; background:#eef2f7; }
+               .gd-media-photo img { width:100%; height:100%; object-fit:cover; transition:transform .55s cubic-bezier(.2,.8,.2,1); }
+               .gd-media-card:hover .gd-media-photo img { transform:scale(1.06); }
+               .gd-media-photo::after { content:''; position:absolute; inset:0; background:rgba(13,27,42,.18); opacity:0; transition:opacity .3s; }
+               .gd-media-card:hover .gd-media-photo::after { opacity:1; }
+               .gd-media-zoom { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(.8); z-index:2; opacity:0; width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,.95); color:#2e7d32; display:grid; place-items:center; box-shadow:0 6px 18px rgba(0,0,0,.25); transition:opacity .3s, transform .3s; }
+               .gd-media-card:hover .gd-media-zoom { opacity:1; transform:translate(-50%,-50%) scale(1); }
+               .gd-media-zoom svg { width:19px; height:19px; }
+               .gd-media-cap { padding:14px 16px 16px; }
+               .gd-media-cap h3 { font-size:.95rem; font-weight:700; color:#14233a; line-height:1.4; margin:0; }
+            </style>
+            <div class="togo-media-ptb pt-60 pb-60">
+               <div class="container container-1440">
+                  <div class="row">
+                     <div class="col-lg-12">
+                        <div class="togo-about-5-heading text-center mb-40">
+                           <span class="togo-section-subtitle fade-anim" data-delay=".3">In the News</span>
+                           <h4 class="togo-section-title fs-36 ff-marcellus mb-0 fade-anim" data-delay=".5">Media Coverage</h4>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="gd-media-grid">
+                     @foreach ($media as $item)
+                     <article class="gd-media-card fade-anim" data-delay="{{ number_format(0.3 + ($loop->index % 3) * 0.15, 2) }}">
+                        <a href="{{ $item->image_url }}" class="popup-image gd-media-photo" title="{{ $item->title }}">
+                           <img src="{{ $item->image_url }}" alt="{{ $item->title }}" loading="lazy">
+                           <span class="gd-media-zoom"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3-3M11 8v6M8 11h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+                        </a>
+                        <div class="gd-media-cap"><h3>{{ $item->title }}</h3></div>
+                     </article>
+                     @endforeach
+                  </div>
+                  <div class="text-center mt-35">
+                     <a class="togo-btn-primary bdr-style orange-bdr" href="{{ route('media') }}">View all coverage</a>
+                  </div>
+               </div>
+            </div>
+            @endif
+            <!-- media gallery highlight end -->
 
 
             <!-- testimonial area start -->

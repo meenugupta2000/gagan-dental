@@ -81,6 +81,7 @@
                                  <ul>
                                     <li><a class="hover-line" href="{{ route('about') }}">About us</a></li>
                                     <li><a class="hover-line" href="{{ route('achievements') }}">Achievements</a></li>
+                                    <li><a class="hover-line" href="{{ route('media') }}">Media Gallery</a></li>
                                     <li><a class="hover-line" href="{{ route('faqs') }}">FAQs</a></li>
                                     <li><a class="hover-line" href="{{ route('blog') }}">Blog</a></li>
                                     <li><a class="hover-line" href="{{ route('contact') }}">Contact</a></li>

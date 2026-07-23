@@ -94,7 +94,7 @@
             </div>
             @endcanany
 
-            @canany(['manage testimonials', 'manage video testimonials', 'manage faqs', 'manage achievements', 'manage features', 'manage blogs', 'manage pages', 'manage hero', 'manage about'])
+            @canany(['manage testimonials', 'manage video testimonials', 'manage faqs', 'manage achievements', 'manage team', 'manage media', 'manage features', 'manage blogs', 'manage pages', 'manage hero', 'manage about'])
             <div class="nav-section" data-section="content">
                 <button type="button" class="nav-heading" aria-expanded="true">
                     <span>Content</span><i class="bi bi-chevron-down nav-caret"></i>
@@ -118,6 +118,16 @@
                     @can('manage achievements')
                         <a href="{{ route('admin.achievements.index') }}" class="nav-link {{ request()->routeIs('admin.achievements.*') ? 'active' : '' }}" title="Achievements">
                             <i class="bi bi-trophy"></i> Achievements
+                        </a>
+                    @endcan
+                    @can('manage team')
+                        <a href="{{ route('admin.team.index') }}" class="nav-link {{ request()->routeIs('admin.team.*') ? 'active' : '' }}" title="Our Team">
+                            <i class="bi bi-people"></i> Our Team
+                        </a>
+                    @endcan
+                    @can('manage media')
+                        <a href="{{ route('admin.media.index') }}" class="nav-link {{ request()->routeIs('admin.media.*') ? 'active' : '' }}" title="Media Gallery">
+                            <i class="bi bi-newspaper"></i> Media Gallery
                         </a>
                     @endcan
                     @can('manage features')

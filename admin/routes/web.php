@@ -14,11 +14,13 @@ use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\HeroSectionController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MediaItemController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SubscriberController;
+use App\Http\Controllers\TeamMemberController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\TreatmentCategoryController;
 use App\Http\Controllers\TreatmentController;
@@ -55,6 +57,8 @@ Route::get('faqs', [FaqController::class, 'page'])->name('faqs');
 
 // Public "Achievements" page.
 Route::get('achievements', [AchievementController::class, 'page'])->name('achievements');
+
+Route::get('media', [MediaItemController::class, 'page'])->name('media');
 
 // Public "Blog" pages (listing + single article).
 Route::get('blog', [BlogController::class, 'page'])->name('blog');
@@ -175,6 +179,20 @@ Route::middleware(['auth', 'active'])
         Route::middleware('permission:manage achievements')->group(function () {
             Route::patch('achievements/{achievement}/toggle', [AchievementController::class, 'toggle'])->name('achievements.toggle');
             Route::resource('achievements', AchievementController::class)->except('show');
+        });
+
+        Route::middleware('permission:manage team')->group(function () {
+            Route::patch('team/{teamMember}/toggle', [TeamMemberController::class, 'toggle'])->name('team.toggle');
+            Route::resource('team', TeamMemberController::class)
+                ->except('show')
+                ->parameters(['team' => 'teamMember']);
+        });
+
+        Route::middleware('permission:manage media')->group(function () {
+            Route::patch('media/{mediaItem}/toggle', [MediaItemController::class, 'toggle'])->name('media.toggle');
+            Route::resource('media', MediaItemController::class)
+                ->except('show')
+                ->parameters(['media' => 'mediaItem']);
         });
 
         Route::middleware('permission:manage offers')->group(function () {
